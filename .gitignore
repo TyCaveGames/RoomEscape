@@ -26,3 +26,13 @@
 *.exe
 *.out
 *.app
+
+RoomEscape/Binaries/
+
+RoomEscape/Intermediate/
+
+RoomEscape/Saved/
+
+RoomEscape/Content/StarterContent/
+
+*.VC.db
