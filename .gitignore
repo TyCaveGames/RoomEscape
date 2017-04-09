@@ -36,3 +36,5 @@ RoomEscape/Saved/
 RoomEscape/Content/StarterContent/
 
 *.VC.db
+
+RoomEscape/RoomEscape\.VC\.VC\.opendb
