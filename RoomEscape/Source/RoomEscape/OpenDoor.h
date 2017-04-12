@@ -25,5 +25,7 @@ public:
 
 private:
 	void RotateOwner(float degrees) const;
+	UPROPERTY(EditAnywhere)
+	ATriggerVolume* pressurePlate;
 	
 };
