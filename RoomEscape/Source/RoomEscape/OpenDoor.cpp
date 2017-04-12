@@ -19,6 +19,7 @@ UOpenDoor::UOpenDoor()
 void UOpenDoor::BeginPlay()
 {
 	Super::BeginPlay();
+	actorsThatCanActivatePlate.Add(GetWorld()->GetFirstPlayerController()->GetPawn());
 	// ...
 	
 }
