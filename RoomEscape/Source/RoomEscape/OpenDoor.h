@@ -24,8 +24,10 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 private:
+	const float DEFAULT_DEGREES = 90.f;
 	void RotateOwner(float degrees) const;
 	UPROPERTY(EditAnywhere)
 	ATriggerVolume* pressurePlate;
-	
+	UPROPERTY(EditAnywhere)
+	TArray<AActor*> actorsThatCanActivatePlate;
 };

@@ -19,8 +19,6 @@ UOpenDoor::UOpenDoor()
 void UOpenDoor::BeginPlay()
 {
 	Super::BeginPlay();
-	RotateOwner(30.0f);
-
 	// ...
 	
 }
@@ -32,11 +30,18 @@ void UOpenDoor::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	// ...
+	for (auto actor : actorsThatCanActivatePlate) {
+		if (pressurePlate->IsOverlappingActor(actor)) {
+			RotateOwner(DEFAULT_DEGREES);
+		}
+	}
+	
 }
 
 void UOpenDoor::RotateOwner(float degrees) const {
 	FRotator rotator;
 	rotator.Yaw = degrees;
-	GetOwner()->EditorApplyRotation(rotator, false, false, false);
+	//GetOwner()->EditorApplyRotation(rotator, false, false, false);
+	GetOwner()->SetActorRotation(rotator, ETeleportType::None);
 }
 
