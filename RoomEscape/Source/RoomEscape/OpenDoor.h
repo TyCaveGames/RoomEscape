@@ -25,9 +25,12 @@ public:
 
 private:
 	const float DEFAULT_DEGREES = 90.f;
+	float lastTimeDoorWasOpened;
 	void RotateOwner(float degrees) const;
 	UPROPERTY(EditAnywhere)
 	ATriggerVolume* pressurePlate;
 	UPROPERTY(EditAnywhere)
 	TArray<AActor*> actorsThatCanActivatePlate;
+	UPROPERTY(EditAnywhere)
+	float timeDelayForDoorToClose;
 };

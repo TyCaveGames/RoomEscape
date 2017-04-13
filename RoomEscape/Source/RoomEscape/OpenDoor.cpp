@@ -34,7 +34,12 @@ void UOpenDoor::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 	for (auto actor : actorsThatCanActivatePlate) {
 		if (pressurePlate->IsOverlappingActor(actor)) {
 			RotateOwner(DEFAULT_DEGREES);
+			lastTimeDoorWasOpened = GetWorld()->GetTimeSeconds();
 		}
+	}
+
+	if (lastTimeDoorWasOpened + timeDelayForDoorToClose <= GetWorld()->GetTimeSeconds()) {
+		RotateOwner(0.0f);
 	}
 	
 }
