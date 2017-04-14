@@ -3,6 +3,7 @@
 #include "RoomEscape.h"
 #include "Grabber.h"
 
+#define OUT
 
 // Sets default values for this component's properties
 UGrabber::UGrabber()
@@ -21,8 +22,20 @@ void UGrabber::BeginPlay()
 	Super::BeginPlay();
 
 	// ...
-	UE_LOG(LogTemp, Warning, TEXT("WAZZZ UPPPP?!?!"));
-	
+	physicsHandle = GetOwner()->FindComponentByClass<UPhysicsHandleComponent>();
+	if (physicsHandle) {
+		; //do nothing;
+	} else {
+		UE_LOG(LogTemp, Error, TEXT("Could not find PhysicsHandle for %s"), *GetOwner()->GetName());
+	}
+
+	inputComponent = GetOwner()->FindComponentByClass<UInputComponent>();
+	if (inputComponent) {
+		inputComponent->BindAction("Grab", IE_Pressed, this, &UGrabber::Grab);
+		inputComponent->BindAction("Grab", IE_Released, this, &UGrabber::Release);
+	} else {
+		UE_LOG(LogTemp, Error, TEXT("Could not find InputComponent for %s"), *GetOwner()->GetName());
+	}
 }
 
 
@@ -31,6 +44,25 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
+	FVector location;
+	FRotator rotation;
 	// ...
+	GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(OUT location, OUT rotation);
+	FVector end = location + rotation.Vector()*REACH;
+	DrawDebugLine(GetWorld(), location, end, FColor::Red);
+
+	FHitResult hitResult;
+	FCollisionObjectQueryParams objectQueryParams = FCollisionObjectQueryParams(ECollisionChannel::ECC_PhysicsBody);
+	bool bGotHit = GetWorld()->LineTraceSingleByObjectType(OUT hitResult, location, end, objectQueryParams);
+	if (bGotHit) {
+		UE_LOG(LogTemp, Warning, TEXT("Hit %s"), *hitResult.GetActor()->GetName())
+	}
 }
 
+void UGrabber::Grab() {
+	UE_LOG(LogTemp, Warning, TEXT("DO THE THING!"));
+}
+
+void UGrabber::Release() {
+	UE_LOG(LogTemp, Warning, TEXT("No longer doing the thing..."));
+}
