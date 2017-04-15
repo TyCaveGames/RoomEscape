@@ -3,7 +3,6 @@
 #include "RoomEscape.h"
 #include "OpenDoor.h"
 
-
 // Sets default values for this component's properties
 UOpenDoor::UOpenDoor()
 {
@@ -20,7 +19,9 @@ void UOpenDoor::BeginPlay()
 {
 	Super::BeginPlay();
 	// ...
-	
+	if (!pressurePlate) {
+		UE_LOG(LogTemp, Error, TEXT("Pressure Plate unassigned!"))
+	}
 }
 
 
@@ -54,6 +55,9 @@ void UOpenDoor::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 float UOpenDoor::GetTotalMassOnPlate() const {
 	float totalMass = 0.f;
 	TArray<AActor*> overlappingActors;
+	
+	if (!pressurePlate) { return totalMass; }
+
 	pressurePlate->GetOverlappingActors(overlappingActors);
 	for (auto actor : overlappingActors) {
 		totalMass += actor->FindComponentByClass<UPrimitiveComponent>()->GetMass();

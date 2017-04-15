@@ -27,14 +27,14 @@ public:
 private:
 	const float DEFAULT_DEGREES = 90.f;
 	bool bIsDoorOpen = false;
-	float doorShouldCloseTimer;
+	float doorShouldCloseTimer = -1.f;
 	
 	UPROPERTY(EditAnywhere)
-	ATriggerVolume* pressurePlate;
+	ATriggerVolume* pressurePlate = nullptr;
 	UPROPERTY(EditAnywhere)
-	float timeDelayForDoorToClose;
+	float timeDelayForDoorToClose = 0.1f;
 	UPROPERTY(EditAnywhere)
-	float massNeeded;
+	float massNeeded = 1.0f;
 
 	void RotateOwner(float degrees) const;
 	float GetTotalMassOnPlate() const;

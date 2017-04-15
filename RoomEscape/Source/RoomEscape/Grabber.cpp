@@ -4,6 +4,7 @@
 #include "Grabber.h"
 
 #define OUT
+#define PHYSICS_HANDLE_CHECK if (!physicsHandle) { return; }
 
 // Sets default values for this component's properties
 UGrabber::UGrabber()
@@ -50,6 +51,9 @@ void UGrabber::bindInput() {
 void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+
+	PHYSICS_HANDLE_CHECK
+
 	FVector location;
 	FRotator rotation;
 	GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(OUT location, OUT rotation);
@@ -61,6 +65,9 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 }
 
 void UGrabber::Grab() {
+
+	PHYSICS_HANDLE_CHECK
+
 	UE_LOG(LogTemp, Warning, TEXT("DO THE THING!"));
 	FVector location;
 	FRotator rotation;
@@ -77,6 +84,9 @@ void UGrabber::Grab() {
 }
 
 void UGrabber::Release() {
+
+	PHYSICS_HANDLE_CHECK
+
 	UE_LOG(LogTemp, Warning, TEXT("No longer doing the thing..."));
 	physicsHandle->ReleaseComponent();
 }
