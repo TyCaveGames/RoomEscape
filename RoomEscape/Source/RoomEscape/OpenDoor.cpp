@@ -32,17 +32,19 @@ void UOpenDoor::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 
 	// ...
 	for (auto actor : actorsThatCanActivatePlate) {
-		if (pressurePlate->IsOverlappingActor(actor)) {
-			RotateOwner(DEFAULT_DEGREES);
+		if (pressurePlate->IsOverlappingActor(actor) ) {
 			doorShouldCloseTimer = timeDelayForDoorToClose;
-			bDoorWasOpenned = true;
+			if (!bIsDoorOpen) {
+				RotateOwner(DEFAULT_DEGREES);
+				bIsDoorOpen = true;
+			}
 		}
 	}
 
-	if (bDoorWasOpenned && doorShouldCloseTimer <= 0) {
-		RotateOwner(0.0f);
-		bDoorWasOpenned = false;
-	} else if (bDoorWasOpenned) {
+	if (bIsDoorOpen && doorShouldCloseTimer <= 0) {
+		RotateOwner(-DEFAULT_DEGREES);
+		bIsDoorOpen = false;
+	} else if (bIsDoorOpen) {
 		doorShouldCloseTimer -= DeltaTime;
 	}
 	
@@ -52,7 +54,7 @@ void UOpenDoor::RotateOwner(float degrees) const {
 	UE_LOG(LogTemp, Warning, TEXT("Rotating Door"))
 	FRotator rotator;
 	rotator.Yaw = degrees;
-	//GetOwner()->EditorApplyRotation(rotator, false, false, false);
-	GetOwner()->SetActorRotation(rotator, ETeleportType::None);
+	GetOwner()->EditorApplyRotation(rotator, false, false, false);
+	//GetOwner()->SetActorRotation(rotator, ETeleportType::None);
 }
 

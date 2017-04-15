@@ -25,7 +25,7 @@ public:
 
 private:
 	const float DEFAULT_DEGREES = 90.f;
-	bool bDoorWasOpenned = false;
+	bool bIsDoorOpen = false;
 	float doorShouldCloseTimer;
 	void RotateOwner(float degrees) const;
 	UPROPERTY(EditAnywhere)
