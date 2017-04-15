@@ -35,21 +35,10 @@ void UOpenDoor::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 	float totalMass = GetTotalMassOnPlate();
 	
 	if (totalMass >= massNeeded) {
-		doorShouldCloseTimer = timeDelayForDoorToClose;
-		if (!bIsDoorOpen) {
-			RotateOwner(DEFAULT_DEGREES);
-			bIsDoorOpen = true;
-		}
+		openEvent.Broadcast();
+	} else {
+		closeEvent.Broadcast();
 	}
-	
-
-	if (bIsDoorOpen && doorShouldCloseTimer <= 0) {
-		RotateOwner(-DEFAULT_DEGREES);
-		bIsDoorOpen = false;
-	} else if (bIsDoorOpen) {
-		doorShouldCloseTimer -= DeltaTime;
-	}
-	
 }
 
 float UOpenDoor::GetTotalMassOnPlate() const {
@@ -65,14 +54,3 @@ float UOpenDoor::GetTotalMassOnPlate() const {
 	UE_LOG(LogTemp, Warning, TEXT("Total Mass on plate: %f"), totalMass)
 	return totalMass;
 }
-
-void UOpenDoor::RotateOwner(float degrees) const {
-	UE_LOG(LogTemp, Warning, TEXT("Rotating Door"))
-	FRotator rotator;
-	rotator.Yaw = degrees;
-	GetOwner()->EditorApplyRotation(rotator, false, false, false);
-	//GetOwner()->SetActorRotation(rotator, ETeleportType::None);
-}
-
-
-
