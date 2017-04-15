@@ -14,6 +14,7 @@ class ROOMESCAPE_API UGrabber : public UActorComponent
 public:	
 	// Sets default values for this component's properties
 	UGrabber();
+	
 
 protected:
 	// Called when the game starts
@@ -32,4 +33,6 @@ private:
 
 	void Grab();
 	void Release();
+	void findPhysicsHandle();
+	void bindInput();
 };
