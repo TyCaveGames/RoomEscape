@@ -25,7 +25,8 @@ public:
 
 private:
 	const float DEFAULT_DEGREES = 90.f;
-	float lastTimeDoorWasOpened;
+	bool bDoorWasOpenned = false;
+	float doorShouldCloseTimer;
 	void RotateOwner(float degrees) const;
 	UPROPERTY(EditAnywhere)
 	ATriggerVolume* pressurePlate;
