@@ -19,7 +19,8 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
-public:	
+public:
+	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
@@ -27,11 +28,14 @@ private:
 	const float DEFAULT_DEGREES = 90.f;
 	bool bIsDoorOpen = false;
 	float doorShouldCloseTimer;
-	void RotateOwner(float degrees) const;
+	
 	UPROPERTY(EditAnywhere)
 	ATriggerVolume* pressurePlate;
 	UPROPERTY(EditAnywhere)
-	TArray<AActor*> actorsThatCanActivatePlate;
-	UPROPERTY(EditAnywhere)
 	float timeDelayForDoorToClose;
+	UPROPERTY(EditAnywhere)
+	float massNeeded;
+
+	void RotateOwner(float degrees) const;
+	float GetTotalMassOnPlate() const;
 };
